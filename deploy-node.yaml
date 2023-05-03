@@ -1,0 +1,34 @@
+---
+- name: Install node & npm
+  hosts: 184.72.167.71
+  become: yes
+  tasks:
+    - name: Update apt repo & cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: Install nodejs & npm
+      apt:
+        pkg:
+          - nodejs
+          - npm
+- name: Deploy nodejs app
+  hosts: 184.72.167.71
+  tasks:
+    - name: Unpack the nodejs file
+      unarchive: 
+        src: /Users/moabdulhadi/Documents/School/DevOps/bootcamp-projects/node-app/nodejs-app-1.0.0.tgz
+        dest: /home/ubuntu/
+    - name: Install dependencies
+      npm: 
+        path: /home/ubuntu/package  
+    - name: Start the app
+      command:
+        chdir: /home/ubuntu/package/app
+        cmd: node server
+      async: 1000
+      poll: 0
+    - name: Ensure the app is running
+      shell: ps aux | grep node
+      register: app_status
+    - debug: msg={{app_status.stdout_lines}} 
+
+        
