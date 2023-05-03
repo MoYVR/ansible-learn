@@ -12,17 +12,19 @@
           - npm
 - name: Deploy nodejs app
   hosts: 184.72.167.71
+  vars_files:
+    - project-vars
   tasks:
     - name: Unpack the nodejs file
       unarchive: 
-        src: /Users/moabdulhadi/Documents/School/DevOps/bootcamp-projects/node-app/nodejs-app-1.0.0.tgz
-        dest: /home/ubuntu/
+        src: "{{location}}/nodejs-app-{{version}}.tgz"
+        dest: "{{destination}}"
     - name: Install dependencies
       npm: 
-        path: /home/ubuntu/package  
+        path: "{{destination}}package"  
     - name: Start the app
       command:
-        chdir: /home/ubuntu/package/app
+        chdir: "{{destination}}package/app"
         cmd: node server
       async: 1000
       poll: 0
