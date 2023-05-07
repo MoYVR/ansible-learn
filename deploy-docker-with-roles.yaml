@@ -1,0 +1,14 @@
+---
+- name: Install Docker, Docker-compose & Python3
+  hosts: all
+  become: yes
+  gather_facts: False
+  roles:
+    - install_python
+
+- name: Start docker container
+  hosts: all
+  vars_files:
+    - project-vars
+  roles:
+    - start_containers

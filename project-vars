@@ -1,0 +1,5 @@
+location: /Users/moabdulhadi/Documents/School/DevOps/bootcamp-projects/node-app
+destination: /home/ubuntu/
+version: 1.0.0
+
+docker_password: 128929Faris!

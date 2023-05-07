@@ -73,7 +73,6 @@
 - name: Start nexus with nexus user
   hosts: nexus_server
   become: yes
-  become_user: nexus
   tasks:
     - name: Set run_as_user nexus
       lineinfile:
@@ -84,7 +83,6 @@
       command: /opt/nexus/bin/nexus start
 
 - name: Verify nexus running
-  hosts: nexus_server
   become: yes
   tasks:
     - name: Ensure nexus is running
